@@ -1,49 +1,31 @@
-## The Core of the ZipCPU
+## ZipCPU的核心
 
-Here are the core files to the ZipCPU.  In here, you'll find not only the
-[main ZipCPU core](./zipcpu.v), but also:
+以下是ZipCPU的核心文件。在这里，您不仅可以找到主要的ZipCPU核心，还可以找到：
 
-- Several prefetch routines
+- 几个预取例程
 
-  o [prefetch.v](./prefetch.v) an older prefetch module that only fetched
-    one instruction at a time, and so prevented pipelining
+  o [prefetch.v](./prefetch.v)  较旧的预取模块，一次只获取一条指令，因此阻止了流水线操作。
 
-  o [pipefetch.v](./pipefetch.v), my first attempt at building a prefetch with
-    cache.  It took a rather unique approach to the cache, implementing it as
-    a rolling window in memory.  This file really sticks around for historical
-    reasons, but not much more.
+  o [pipefetch.v](./pipefetch.v), 我第一次尝试使用缓存构建预取。它采用了一种相当独特的缓存方法，将其作为内存中的滚动窗口实现。 这个文件因历史原因而存在，但不多。
 
-  o [dblfetch.v](./dbgfetch.v), fetches two instructions at once (on subsequent
-    clocks).  This is designed to increase the speed of the CPU when it isn't
-    pipelined, by exploiting the fact that many memory accesses go faster for
-    the second access.
+  o [dblfetch.v](./dbgfetch.v), 一次取两个指令（在后续时钟上）。这是为了通过利用许多内存访问在第二次访问时更快的事实来提高CPU不流水线时的速度。
 
-  o [pfcache.v](./pfcache.v), this is the current/best instruction cache
-    for the CPU.
+  o [pfcache.v](./pfcache.v), 这是CPU的当前/最佳指令缓存。
 
 
-- [idecode.v](./idecode.v), an instruction decoder
+- [idecode.v](./idecode.v), 指令解码器
 
-- Several memory access routines
+- 几个内存访问例程
 
-  o [memops.v](./memops.v), a typical/traditional one memory operation at a
-    time means of accessing memory.  This was my first approach to memory,
-    and the appropriate approach still when the CPU is not running in its
-    pipelind mode.
+  o [memops.v](./memops.v), 典型/传统的一个存储器操作一次访问存储器。这是我的第一个内存方法，当CPU没有以其pipelind模式运行时，仍然采用适当的方法。
 
-  o [pipemem.v](./pipemem.v), a faster memory access method that groups
-    consecutive memory accesses together into a pipelined bus access.
-    This routine has so far compensated for the fact that the ZipCPU does not
-    (yet) have an integrated data cache.
+  o [pipemem.v](./pipemem.v), 一种更快的内存访问方法，它将连续的内存访问组合成一个流水线总线访问。到目前为止，该例程补偿了ZipCPU（尚未）具有集成数据高速缓存的事实。
 
-  o [dcache.v](./dcache.v), is my attempt at building a data cache.  This
-    has never been integrated with the CPU, and may not be integrated until
-    the MMU is also integrated.
+  o [dcache.v](./dcache.v), 是我尝试构建数据缓存。这从未与CPU集成，并且在MMU也集成之前可能无法集成。
 
 - [div.v](./div.v), the divide unit
 
 - [cpuops.v](./cpuops.v), the ALU unit
 
-The defines within [cpudefs.v](../cpudefs.v) will determine which of these
-modules gets linked into your CPU.
+The defines within [cpudefs.v](../cpudefs.v) will determine which of these modules gets linked into your CPU.
 
